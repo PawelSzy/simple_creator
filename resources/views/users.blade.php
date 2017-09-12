@@ -19,7 +19,7 @@
 
 <title>Laravel</title>
 
-<h2><a href="">ADD</a></h2>
+<h2><a href="/user_add">ADD</a></h2>
 
 <table>
     <tr>

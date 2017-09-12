@@ -7,12 +7,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Edit User</title>
+<title>Add User</title>
 
-<h1>Edit User</h1>
-<h2>{{ $user->firstname }} {{ $user->surname }}</h2>
+<h1>Add User</h1>
 
-{!! Form::model($user, ['method' => 'PATCH', 'action' => ['UsersController@edit', $user->id] ]) !!}
+{!! Form::open(['url' => 'user_add']) !!}
 
 {{ Form::label('title', 'Firstname') }}<br />
 {{ Form::text('firstname', null, ['class' => 'form-control']) }}
