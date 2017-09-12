@@ -7,32 +7,34 @@ use App\Http\Controllers\Controller;
 class UsersController extends Controller
 {
 
-    /**
-     * Show the profile for the given user.
-     *
-     * @param  int  $id
+    /*
      * @return Response
      */
     public function show_all()
     {
-        var_dump('test');
-//        return view('user.profile', ['user' => User::findOrFail($id)]);
+        $users = User::all();
+        return view('users')->with('users', $users);
     }
 
 
     /**
-     * Show the profile for the given user.
      *
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-
-
-//        $user = ['firstname' => "Paweł", 'surname' => 'Szymanski', 'email' =>'pawelszyman@gmail.com'];
         $user = User::find($id);
+        return view('user')->with('user', $user);
+    }
 
+    /**
+    * @param  int  $id
+    * @return Response
+    */
+    public function edit($id)
+    {
+        $user = User::find($id);
         return view('user')->with('user', $user);
     }
 

@@ -13,3 +13,5 @@
 
 Route::get('/','UsersController@show_all');
 Route::get('/user/{id}','UsersController@show');
+Route::get('/user_edit/{id}','UsersController@edit');
+Route::get('/user_delete/{id}','UsersController@delete');
