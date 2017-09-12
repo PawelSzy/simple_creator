@@ -26,9 +26,12 @@ class UsersController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show()
+    public function show($id)
     {
-        $user = ['firstname' => "Paweł", 'surname' => 'Szymanski', 'email' =>'pawelszyman@gmail.com'];
+
+
+//        $user = ['firstname' => "Paweł", 'surname' => 'Szymanski', 'email' =>'pawelszyman@gmail.com'];
+        $user = User::find($id);
 
         return view('user')->with('user', $user);
     }

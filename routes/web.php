@@ -12,4 +12,4 @@
 */
 
 Route::get('/','UsersController@show_all');
-Route::get('/user','UsersController@show');
+Route::get('/user/{id}','UsersController@show');
