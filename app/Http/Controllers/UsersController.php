@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
-//use Illuminate\Http\Request;
-//use Request;
-//use App\Http\Requests\UserRequest;
+use Session;
+
 
 class UsersController extends Controller
 {
@@ -65,7 +64,7 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-//        Session::flash('flash_message', 'Uzytkownik zostal skasowany!');
+        Session::flash('flash_message', 'Uzytkownik zostal skasowany!');
 
         return redirect('/');
     }
