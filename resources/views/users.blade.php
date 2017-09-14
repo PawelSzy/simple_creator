@@ -35,7 +35,9 @@
             <td>{{ $user['surname']}}</td>
             <td>{{ $user['email']}}</td>
             <td><a href="/user_edit/{{ $user->id }}">edit</a></td>
-            <td>delete</td>
+            <td>
+                <a href="/user_delete/{{ $user->id }}">delete</a>
+            </td>
         </tr>
     @endforeach
 </table>

@@ -60,4 +60,13 @@ class UsersController extends Controller
         $input = User::create($request->all());
         return redirect('/');
     }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+//        Session::flash('flash_message', 'Uzytkownik zostal skasowany!');
+
+        return redirect('/');
+    }
 }
