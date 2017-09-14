@@ -1,8 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\User;
 use App\Http\Controllers\Controller;
+//use Illuminate\Http\Request;
+//use Request;
+//use App\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
@@ -38,8 +42,22 @@ class UsersController extends Controller
         return view('user')->with('user', $user);
     }
 
+    public function edit_user(UserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        var_dump($user);
+        $user->update($request->all());
+        return redirect('/');
+    }
+
     public function add()
     {
         return view('add_user');
+    }
+
+    public function add_user(UserRequest $request)
+    {
+        $input = User::create($request->all());
+        return redirect('/');
     }
 }

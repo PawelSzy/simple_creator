@@ -14,5 +14,7 @@
 Route::get('/','UsersController@show_all');
 Route::get('/user/{id}','UsersController@show');
 Route::get('/user_add/','UsersController@add');
+Route::post('/user_add/','UsersController@add_user');
 Route::get('/user_edit/{id}','UsersController@edit');
+Route::patch('/user_edit/{id}','UsersController@edit_user');
 Route::get('/user_delete/{id}','UsersController@delete');
