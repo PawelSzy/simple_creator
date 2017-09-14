@@ -9,7 +9,10 @@ use Session;
 
 class UsersController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['edit', 'edit_user', 'add', 'add_user', 'delete']]);
+    }
     /*
      * @return Response
      */
@@ -44,7 +47,6 @@ class UsersController extends Controller
     public function edit_user(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        var_dump($user);
         $user->update($request->all());
         return redirect('/');
     }
