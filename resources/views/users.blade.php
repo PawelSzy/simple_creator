@@ -4,6 +4,7 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+    
     th, td {
         padding: 15px;
         margin: 25px;
@@ -19,16 +20,14 @@
 
 @section('content')
 
-@if(Session::has('flash_message'))
-    <div class="alert alert-success">
-        {{ Session::get('flash_message') }}
-    </div>
-@endif
-
-
-
 <div id="users_table">
     <h2><a href="/user_add">ADD</a></h2>
+
+    @if(Session::has('flash_message'))
+        <div class="alert alert-success">
+            {{ Session::get('flash_message') }}
+        </div>
+    @endif
 
     <table >
         <tr>

@@ -9,10 +9,6 @@ use Session;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', ['only' => ['edit', 'edit_user', 'add', 'add_user', 'delete']]);
-    }
     /*
      * @return Response
      */
