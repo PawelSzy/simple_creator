@@ -1,27 +1,25 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-</head>
-<body>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-<title>Edit User</title>
-
-@if($errors->any())
-    <div class="alert alert-danger">
-        @foreach($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
+@section('content')
 
 
-<h1>Edit User</h1>
-<h2>{{ $user->firstname }} {{ $user->surname }}</h2>
+<div class="col-md-12">
+    <h1>Edit User</h1>
+    <h2>{{ $user->firstname }} {{ $user->surname }}</h2>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
+
+</div>
 
 {!! Form::model($user, ['method' => 'PATCH', 'action' => ['UsersController@edit_user', $user->id] ]) !!}
+<div class="col-md-4">
 
 {{ Form::label('title', 'Firstname') }}<br />
 {{ Form::text('firstname', null, ['class' => 'form-control']) }}
@@ -39,14 +37,15 @@
 <br /><br />
 
 {{ Form::label('title', 'password') }}<br />
-{{ Form::password('password', null, ['class' => 'form-control']) }}
+{{ Form::password('password', ['class' => 'form-control']) }}
 
 <br /><br />
 
 {{ Form::submit('Save') }}
 
+</div>
 {!! Form::close() !!}
 
-</body>
+@endsection
 
 

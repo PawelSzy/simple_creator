@@ -1,25 +1,32 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-</head>
-<body>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    #add_users {
+        margin: 25px;
+    }
+</style>
 
-<title>Add User</title>
+@extends('layouts.app')
 
-<h1>Add User</h1>
+@section('content')
 
-@if($errors->any())
-    <div class="alert alert-danger">
-        @foreach($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
+
+
+<div id="add_users">
+
+<div class="col-md-12">
+    <h1>Add User</h1>
+
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+</div>
 
 {!! Form::open(['url' => 'user_add']) !!}
+
+<div class="col-md-4">
 
 {{ Form::label('title', 'Firstname') }}<br />
 {{ Form::text('firstname', null, ['class' => 'form-control']) }}
@@ -31,20 +38,26 @@
 
 <br /><br />
 
-{{ Form::label('title', 'email') }}<br />
+{{ Form::label('title', 'Email') }}<br />
 {{ Form::text('email', null, ['class' => 'form-control']) }}
 
 <br /><br />
 
-{{ Form::label('title', 'password') }}<br />
-{{ Form::password('password', null, ['class' => 'form-control']) }}
+{{ Form::label('title', 'Password') }}<br />
+{{ Form::password('password', ['class' => 'form-control']) }}
 
 <br /><br />
 
 {{ Form::submit('Save') }}
 
+</div>
+
 {!! Form::close() !!}
 
-</body>
+
+
+
+</div>
+@endsection
 
 

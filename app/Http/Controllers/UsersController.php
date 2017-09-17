@@ -44,7 +44,6 @@ class UsersController extends Controller
     public function edit_user(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        var_dump($user);
         $user->update($request->all());
         return redirect('/');
     }
