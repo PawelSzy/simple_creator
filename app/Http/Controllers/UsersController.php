@@ -63,7 +63,7 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        Session::flash('flash_message', 'Uzytkownik zostal skasowany!');
+        Session::flash('flash_message', 'User was deleted!');
 
         return redirect('/');
     }
