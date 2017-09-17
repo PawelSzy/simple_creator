@@ -18,3 +18,7 @@ Route::post('/user_add/','UsersController@add_user');
 Route::get('/user_edit/{id}','UsersController@edit');
 Route::patch('/user_edit/{id}','UsersController@edit_user');
 Route::get('/user_delete/{id}','UsersController@delete');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
