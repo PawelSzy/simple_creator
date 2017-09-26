@@ -46,6 +46,11 @@
 </div>
 {!! Form::close() !!}
 
+<script>
+
+
+</script>
+
 @endsection
 
 
