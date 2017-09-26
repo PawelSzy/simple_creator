@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\AdditionalEmails;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,4 +17,19 @@ class UserAjaxController extends Controller {
 
         return response()->json($emails, 200);
     }
+
+    public function add_user_additional_email(Request $request)
+    {
+        $email = $request->email;
+        $user_id = $request->user_id;
+
+        $additional_email = new AdditionalEmails();
+        $additional_email->email = $request->email;
+        $additional_email->user_id = $request->user_id;
+
+        $additional_email->save();
+
+        return response()->json(array($email, $user_id), 200);
+    }
+
 }
