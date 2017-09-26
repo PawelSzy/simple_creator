@@ -14,13 +14,26 @@
         margin: 25px;
 
     }
+
+    .modal-user-name {
+        color:brown;
+    }
+
+    .modal-user-email {
+        color: brown;
+    }
+
+    .modal-user-text {
+        color: rosybrown;
+    }
+
 </style>
 
 @extends('layouts.app')
 
 @section('content')
 
-<div id="users_table">
+    <div id="users_table">
     <h2><a href="/user_add">ADD</a></h2>
 
     @if(Session::has('flash_message'))
@@ -48,7 +61,15 @@
                     <a href="/user_delete/{{ $user->id }}">delete</a>
                 </td>
                 <td>
-                    <a href="" data-toggle="modal" data-target="#usersModal">
+                    <a href=""
+                       data-toggle="modal"
+                       data-target="#usersModal"
+                       data-firstname="{{ $user['firstname'] }}"
+                       data-surname="{{ $user['surname'] }}"
+                       data-email="{{ $user['email'] }}"
+                       data-user_id="{{ $user->id }}"
+
+                    >
                         add details
                     </a>
                 </td>
@@ -62,15 +83,31 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h3 class="modal-title" id="exampleModalLabel">
+                    <span class="modal-user-name">
+                        <span id="modal_firstname"></span>
+                        <span id="modal_surname"></span>
+                    </span>
+                    <span >
+                        <span class="modal-user-text">email:</span>
+                        <span class="modal-user-email" id="modal_email"></span>
+                    </span>
+
+                </h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <table>
-                    <tr><th>Name</th></tr>
-                    <tr><td>User Email1</td></tr>
+                    <tr>
+                        <th>
+                            <span id="modal_firstname"></span>
+                            <span id="modal_surname"></span>
+                            email: <span id="modal_email"></span>
+                        </th>
+                    </tr>
+                    <tr><td id="modal_user_email">User Email1</td></tr>
                     <tr><td>User Email2</td></tr>
                 </table>
             </div>
@@ -81,6 +118,28 @@
         </div>
     </div>
 </div>
+
+    <script>
+        $(document).ready(function() {
+            console.log('outside');
+            $('#usersModal').on('show.bs.modal', function (event) {
+                console.log('inside');
+                var link = $(event.relatedTarget); // Button that triggered the modal
+                var email = link.data('email'); // Extract info from data-* attributes
+                var firstname = link.data('firstname'); // Extract info from data-* attributes
+                var surname = link.data('surname'); // Extract info from data-* attributes
+                var modal = $(this);
+//        modal.find('.modal-title').text('New message to ' + recipient);
+//        modal.find('.modal-body input').val(recipient);
+
+
+                $('#modal_email').text(email);
+                $('#modal_firstname').text(firstname);
+                $('#modal_surname').text(surname);
+            })
+        });
+    </script>
+
 
 @endsection
 
