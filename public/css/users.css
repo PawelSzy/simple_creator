@@ -1,0 +1,26 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    margin: 25px;
+}
+
+#users_table {
+    margin: 25px;
+
+}
+
+.modal-user-name {
+    color:brown;
+}
+
+.modal-user-email {
+    color: brown;
+}
+
+.modal-user-text {
+    color: rosybrown;
+}
