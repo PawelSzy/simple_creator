@@ -41,6 +41,15 @@ class UserAjaxController extends Controller {
         return response()->json($return_data, 200);
     }
 
+    public function delete_email($id)
+    {
+        $additional_email = AdditionalEmails::find($id);
+        $was_deleted =  $additional_email->delete();
+
+        return response()->json(array('was_deleted' => $was_deleted), 200);
+
+    }
+
     private static function check_errors(AdditionalEmails $additional_email) :array
     {
         $errors = array();

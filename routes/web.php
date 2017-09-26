@@ -26,5 +26,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user_email/{user_id?}','UserAjaxController@index');
 
 Route::post('/user_email_add/','UserAjaxController@add_user_additional_email');
+Route::delete('/user_email/{id?}','UserAjaxController@delete_email');
 
 
