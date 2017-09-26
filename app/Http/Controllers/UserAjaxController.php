@@ -20,16 +20,46 @@ class UserAjaxController extends Controller {
 
     public function add_user_additional_email(Request $request)
     {
-        $email = $request->email;
-        $user_id = $request->user_id;
-
         $additional_email = new AdditionalEmails();
         $additional_email->email = $request->email;
-        $additional_email->user_id = $request->user_id;
+        $additional_email->user_id = (int)$request->user_id;
 
-        $additional_email->save();
+        $errors = self::check_errors($additional_email);
+        $was_saved = false;
 
-        return response()->json(array($email, $user_id), 200);
+        if(empty($errors))
+        {
+            $was_saved = $additional_email->save();
+        }
+
+        $return_data = array(
+            'was_saved' => $was_saved,
+            'data' =>array($additional_email->email, $additional_email->user_id),
+            'errors' => $errors
+        );
+
+        return response()->json($return_data, 200);
     }
 
+    private static function check_errors(AdditionalEmails $additional_email) :array
+    {
+        $errors = array();
+
+        if(!filter_var($additional_email->email, FILTER_VALIDATE_EMAIL))
+        {
+            $errors[] = "Email is in wrong format";
+        }
+
+        if(!$additional_email->user_exist())
+        {
+            $errors[] = "User do not exist";
+        }
+
+        if($additional_email->email_exist())
+        {
+            $errors[] = "Email exist";
+        }
+
+        return $errors;
+    }
 }

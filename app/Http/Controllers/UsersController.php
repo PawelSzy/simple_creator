@@ -6,7 +6,6 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Session;
 
-
 class UsersController extends Controller
 {
     /*
@@ -17,7 +16,6 @@ class UsersController extends Controller
         $users = User::all();
         return view('users')->with('users', $users);
     }
-
 
     /**
      *
