@@ -23,4 +23,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/user_email','UserAjaxController@index');
+Route::get('/user_email/{user_id?}','UserAjaxController@index');
