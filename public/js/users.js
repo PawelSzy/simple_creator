@@ -20,13 +20,15 @@ $(document).ready(function() {
     });
 
     function add_emails_to_table(emails) {
+        var rowCount = $('#users-emails-table tr').length;
+
         emails.forEach(function (email, index) {
             var button_delete = '<button type="button" data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
                 + '</button>';
 
-            var table_row = '<tr><td class="email-row" id="modal_user_email"' + index + '>'
-                + (index + 1) + ". "
+            var table_row = '<tr><td class="email-row" id="modal_user_email"' + index + rowCount + '>'
+                + (index + 1 + rowCount) + ". "
                 + email.email
                 + "     " + button_delete
                 + '</td>'
