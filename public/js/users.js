@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    var modal_is_on = false;
+    var enable_delete = false;
+
     $('#usersModal').on('show.bs.modal', function (event) {
         delete_modal_data();
 
@@ -16,14 +19,19 @@ $(document).ready(function() {
         $('#modal_surname').text(surname);
 
         ajax_get_additional_emails(user_id, add_emails_to_table);
-        enable_add_emails_from_form_data(user_id);
+
+        if(!modal_is_on)
+        {
+            enable_add_emails_from_form_data(user_id);
+            modal_is_on = true;
+        }
     });
 
     function add_emails_to_table(emails) {
         var rowCount = $('#users-emails-table tr').length;
 
         emails.forEach(function (email, index) {
-            var button_delete = '<button type="button" data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
+            var button_delete = '<button type="button" data-user-id' + email.user_id + ' data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
                 + '</button>';
 
@@ -37,13 +45,13 @@ $(document).ready(function() {
             $('#users-emails-table').append(table_row);
         });
 
-        $('.delete-email').click(function () {
-            ajax_delete_email($(this).data('email-id'), function () {
-                $(this).closest('.email-row').hide()
+        $('.delete-email').off('click').click(function () {
+            var self = $(this);
+            ajax_delete_email(self.data('email-id'), function () {
+                self.closest('.email-row').remove();
             });
         });
     }
-
 
     function enable_add_emails_from_form_data(user_id) {
         // Add new emails after click add
@@ -89,7 +97,6 @@ $(document).ready(function() {
         $.post( "/user_email_add", { user_id: user_id, email: email})
             .done(function( data ) {
                 var email = {};
-                
                 email.email = data.data.user_email;
                 email.user_id = data.data.user_id;
                 email.email_id = data.data.email_id;

@@ -12,7 +12,7 @@ class UserAjaxController extends Controller {
 
         $emails = [];
         foreach ($additional_emails as $email) {
-            $emails[] = ['email' => $email->email, 'email_id' => $email->id];
+            $emails[] = ['email' => $email->email, 'email_id' => $email->id, 'user_id' => $user_id];
         }
 
         return response()->json($emails, 200);
