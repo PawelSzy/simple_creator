@@ -1,6 +1,5 @@
 $(document).ready(function() {
     var modal_is_on = false;
-    var enable_delete = false;
 
     $('#usersModal').on('show.bs.modal', function (event) {
         delete_modal_data();
@@ -81,11 +80,10 @@ $(document).ready(function() {
         $('#users-emails-table').empty();
     }
 
-
     function validateEmail(email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
+        return re.test(email);
+    }
 
     //Ajax functions
     function ajax_get_additional_emails(id_user, callback) {
