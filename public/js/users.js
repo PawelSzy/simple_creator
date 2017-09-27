@@ -59,16 +59,21 @@ $(document).ready(function() {
             e.preventDefault();
 
             var loginForm = $("#input-form");  //form id
-
             var formData = loginForm.serializeArray()[0];
-
             var dataObj = {};
 
             $(formData).each(function(i, field){
                 dataObj[field.name] = field.value;
             });
 
-            ajax_add_additional_email(user_id, dataObj['user_email'], add_emails_to_table);
+            var email_adres = dataObj['user_email'];
+
+            if(validateEmail(email_adres)) {
+                ajax_add_additional_email(user_id, email_adres, add_emails_to_table);
+            } else {
+                alert('Invalid email - please enter the valid email')
+            }
+
         });
     }
 
@@ -76,6 +81,11 @@ $(document).ready(function() {
         $('#users-emails-table').empty();
     }
 
+
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
     //Ajax functions
     function ajax_get_additional_emails(id_user, callback) {
@@ -125,5 +135,4 @@ $(document).ready(function() {
             }
         });
     }
-
 });
