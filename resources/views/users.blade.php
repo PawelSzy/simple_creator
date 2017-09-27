@@ -74,12 +74,12 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <form>
+                <form id="input-form" name="get-email">
                     <span class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="email" class="col-sm-9" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" name="user_email" class="col-sm-9" id="input-email" aria-describedby="emailHelp" placeholder="Enter email">
                     </span>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" id="add-email-button" class="btn btn-primary">Add</button>
                 </form>
             </div>
         </div>
