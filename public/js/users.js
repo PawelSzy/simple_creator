@@ -7,6 +7,7 @@ $(document).ready(function() {
         var email = link.data('email');
         var firstname = link.data('firstname');
         var surname = link.data('surname');
+        var user_id = link.data('user_id');
         var modal = $(this);
 
         // Wyswietl dane na stronie
@@ -14,8 +15,9 @@ $(document).ready(function() {
         $('#modal_firstname').text(firstname);
         $('#modal_surname').text(surname);
 
-        var emails = ['test@example.pl', 'dolar@wp.pl', 'euro@gmail.com'];
-        add_emails_to_table(emails);
+        get_additional_email(user_id, add_emails_to_table)
+
+        // add_emails_to_table(emails);
     });
 
     function add_emails_to_table(emails) {
@@ -25,11 +27,11 @@ $(document).ready(function() {
                 + '</button>';
 
             var table_row = '<tr><td id="modal_user_email"' + index + '>'
-                + (index+1) +". "
+                + (index + 1) + ". "
                 + email
-                +  "     " + button_delete
-                +'</td>'
-                +'</tr>';
+                + "     " + button_delete
+                + '</td>'
+                + '</tr>';
 
             $('#users-emails-table').append(table_row);
         });
@@ -37,5 +39,25 @@ $(document).ready(function() {
 
     function delete_modal_data() {
         $('#users-emails-table').empty();
+    }
+
+    function delete_email()
+    {
+
+    }
+
+    function get_additional_email(id_user, callback) {
+        $.ajax({
+            type: "GET",
+            url: '/user_email' + '/' + id_user,
+            success: function (data) {
+                console.log(data);
+
+                callback(data);
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
     }
 });
