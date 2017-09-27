@@ -15,11 +15,11 @@ $(document).ready(function() {
         $('#modal_firstname').text(firstname);
         $('#modal_surname').text(surname);
 
-        get_additional_email(user_id, add_emails_to_table)
-
+        ajax_get_additional_emails(user_id, add_emails_to_table);
+        enable_add_emails_from_form_data(user_id);
     });
 
-    function add_emails_to_table(emails, user_id) {
+    function add_emails_to_table(emails) {
         emails.forEach(function (email, index) {
             var button_delete = '<button type="button" data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
@@ -36,16 +36,14 @@ $(document).ready(function() {
         });
 
         $('.delete-email').click(function () {
-            delete_email($(this).data('email-id'), function () {
+            ajax_delete_email($(this).data('email-id'), function () {
                 $(this).closest('.email-row').hide()
             });
         });
-
-        add_emails_from_form_data(user_id);
     }
 
 
-    function add_emails_from_form_data(user_id) {
+    function enable_add_emails_from_form_data(user_id) {
         // Add new emails after click add
         $("#add-email-button").click(function (e) {
             e.preventDefault();
@@ -60,7 +58,7 @@ $(document).ready(function() {
                 dataObj[field.name] = field.value;
             });
 
-            add_additional_email(user_id, dataObj['user_email']);
+            ajax_add_additional_email(user_id, dataObj['user_email'], add_emails_to_table);
         });
     }
 
@@ -68,7 +66,9 @@ $(document).ready(function() {
         $('#users-emails-table').empty();
     }
 
-    function get_additional_email(id_user, callback) {
+
+    //Ajax functions
+    function ajax_get_additional_emails(id_user, callback) {
         $.ajax({
             type: "GET",
             url: '/user_email' + '/' + id_user,
@@ -83,15 +83,17 @@ $(document).ready(function() {
         });
     }
 
-    function add_additional_email(user_id, email, callback) {
+    function ajax_add_additional_email(user_id, email, callback) {
         $.post( "/user_email_add", { user_id: user_id, email: email})
             .done(function( data ) {
-                console.log('***********************');
-                console.log('Email add', data);
-                console.log('***********************');
+                var email = {};
+                
+                email.email = data.data.user_email;
+                email.user_id = data.data.user_id;
+                email.email_id = data.data.email_id;
 
                 if(callback) {
-                    callback(data);
+                    callback([email]);
                 }
             })
             .fail(function(data) {
@@ -99,8 +101,7 @@ $(document).ready(function() {
             });
     }
 
-
-    function delete_email(email_id, callback) {
+    function ajax_delete_email(email_id, callback) {
         $.ajax({
             type: "DELETE",
             url: '/user_email' + '/' + email_id,

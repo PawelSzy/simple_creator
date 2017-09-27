@@ -34,7 +34,10 @@ class UserAjaxController extends Controller {
 
         $return_data = array(
             'was_saved' => $was_saved,
-            'data' =>array($additional_email->email, $additional_email->user_id),
+            'data' =>array(
+                'user_email' => $additional_email->email,
+                'email_id'=> $additional_email->id,
+                'user_id' =>$additional_email->user_id),
             'errors' => $errors
         );
 
