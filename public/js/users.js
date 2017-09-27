@@ -17,23 +17,28 @@ $(document).ready(function() {
 
         get_additional_email(user_id, add_emails_to_table)
 
-        // add_emails_to_table(emails);
     });
 
     function add_emails_to_table(emails) {
         emails.forEach(function (email, index) {
-            var button_delete = '<button type="button" class="close delete-email" aria-label="Close">'
+            var button_delete = '<button type="button" data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
                 + '</button>';
 
-            var table_row = '<tr><td id="modal_user_email"' + index + '>'
+            var table_row = '<tr><td class="email-row" id="modal_user_email"' + index + '>'
                 + (index + 1) + ". "
-                + email
+                + email.email
                 + "     " + button_delete
                 + '</td>'
                 + '</tr>';
 
             $('#users-emails-table').append(table_row);
+        });
+
+        $('.delete-email').click(function () {
+            delete_email($(this).data('email-id'), function () {
+                $(this).closest('.email-row').hide()
+            });
         });
     }
 
@@ -41,9 +46,20 @@ $(document).ready(function() {
         $('#users-emails-table').empty();
     }
 
-    function delete_email()
-    {
-
+    function delete_email(email_id, callback) {
+        $.ajax({
+            type: "DELETE",
+            url: '/user_email' + '/' + email_id,
+            success: function (data) {
+                console.log(data);
+                if(callback) {
+                    callback(data);
+                }
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
     }
 
     function get_additional_email(id_user, callback) {
