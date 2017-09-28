@@ -1,3 +1,4 @@
+var usersEmails = [];
 $(document).ready(function() {
     var modal_is_on = false;
 
@@ -30,7 +31,10 @@ $(document).ready(function() {
         var rowCount = $('#users-emails-table tr').length;
 
         emails.forEach(function (email, index) {
-            var button_delete = '<button type="button" data-user-id' + email.user_id + ' data-email-id='+ email.email_id +' class="close delete-email" aria-label="Close">'
+            var button_delete = '<button type="button" data-user-id=' + email.user_id
+                +' data-email-id='+ email.email_id +' class="close delete-email" '
+                + 'data-email=' + email.email + " "
+                + 'aria-label="Close">'
                 + '<span aria-hidden="true">&times;</span>'
                 + '</button>';
 
@@ -41,13 +45,20 @@ $(document).ready(function() {
                 + '</td>'
                 + '</tr>';
 
+
             $('#users-emails-table').append(table_row);
+            usersEmails.push(email.email);
         });
 
         $('.delete-email').off('click').click(function () {
             var self = $(this);
             ajax_delete_email(self.data('email-id'), function () {
                 self.closest('.email-row').remove();
+                var email = self.data('email');
+                var index = usersEmails.indexOf(email);
+                if (index > -1) {
+                    usersEmails.splice(index, 1);
+                }
             });
         });
     }
@@ -68,7 +79,11 @@ $(document).ready(function() {
             var email_adres = dataObj['user_email'];
 
             if(validateEmail(email_adres)) {
-                ajax_add_additional_email(user_id, email_adres, add_emails_to_table);
+                if(!($.inArray(email_adres, usersEmails) > -1)) {
+                    ajax_add_additional_email(user_id, email_adres, add_emails_to_table);
+                } else {
+                    alert('User email is already on the list');
+                }
             } else {
                 alert('Invalid email - please enter the valid email')
             }
@@ -77,6 +92,7 @@ $(document).ready(function() {
     }
 
     function delete_modal_data() {
+        usersEmails = [];
         $('#users-emails-table').empty();
     }
 
@@ -104,13 +120,17 @@ $(document).ready(function() {
     function ajax_add_additional_email(user_id, email, callback) {
         $.post( "/user_email_add", { user_id: user_id, email: email})
             .done(function( data ) {
-                var email = {};
-                email.email = data.data.user_email;
-                email.user_id = data.data.user_id;
-                email.email_id = data.data.email_id;
+                if(data['was_saved']) {
+                    var email = {};
+                    email.email = data.data.user_email;
+                    email.user_id = data.data.user_id;
+                    email.email_id = data.data.email_id;
 
-                if(callback) {
-                    callback([email]);
+                    if(callback) {
+                        callback([email]);
+                    }
+                } else {
+                    alert('Email was not saved');
                 }
             })
             .fail(function(data) {
